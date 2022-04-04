@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="modelo.Aberturas"/>
+    <fullyQualifiedTypeName name="modelo.Carro"/>
+    <fullyQualifiedTypeName name="controladora.Controladora"/>
+    <fullyQualifiedTypeName name="modelo.Fabrica"/>
+    <fullyQualifiedTypeName name="visualizacao.InterfaceGrafica"/>
+    <fullyQualifiedTypeName name="modelo.Movimentacao"/>
+    <fullyQualifiedTypeName name="modelo.Conta"/>
+    <fullyQualifiedTypeName name="controle.Controladora"/>
+    <fullyQualifiedTypeName name="javax.swing.JComboBox"/>
+    <fullyQualifiedTypeName name="modelo.Estoque"/>
+    <fullyQualifiedTypeName name="modelo.Cadastros"/>
+    <fullyQualifiedTypeName name="java.text.NumberFormat"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+    <fullyQualifiedTypeName name="java.util.Calendar"/>
+    <fullyQualifiedTypeName name="visualizacao.EntradaSaida"/>
+    <fullyQualifiedTypeName name="modelo.Produto"/>
+</qualifiedTypeNameHistroy>

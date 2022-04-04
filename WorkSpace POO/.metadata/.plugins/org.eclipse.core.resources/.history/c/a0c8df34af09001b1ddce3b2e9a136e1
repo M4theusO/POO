@@ -1,0 +1,127 @@
+package controle;
+
+import javax.swing.JOptionPane;
+
+import modelo.Loja;
+import visualizacao.EntradaSaida;
+
+public class Controladora {
+
+	Loja loja = new Loja(); // REFATORAR **OK**
+	// Cupom cupom = new Cupom(); //TIRAR INSTANCIA POIS VOU CHAMAR OS METODOS PELO
+	// ESTOQUE **OK**
+	// private ArrayList<Cupom> listaDeCupons = new ArrayList<Cupom>(); //DEIXAR AS
+	// TRES LISTAS JUNTAS **OK**
+
+	public void exibeMenu() {
+
+		int opcao;
+		String estocados = "";
+		String cadastrados = "";
+		int posicaoVenda = 0;
+
+		do {
+			opcao = EntradaSaida.solicitaOpcao();
+
+			switch (opcao) {
+			case 0:
+				int qtde = EntradaSaida.solicitaQtdeCadastrar();
+				for (int i = 0; i < qtde; i++) {
+					String descricao = EntradaSaida.solicitaDescricao();
+					double preco = EntradaSaida.solicitaPreco();
+					loja.cadastrarProduto(descricao, preco);
+				}
+				break;
+			case 1:
+				//cadastrados = loja.geraListaCadastrados();
+				//if (cadastrados == "") {
+				if (loja.getListaDeCadastrados().size() == 0) {
+					EntradaSaida.exibeMsgErro("Nenhum produto foi cadastrado!", "Lista de Cadastros");
+					//JOptionPane.showMessageDialog(null,"Nenhum produto foi cadastrado!", "Lista de Cadastros",
+					//		JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					cadastrados = loja.geraListaCadastrados();
+					EntradaSaida.exibeListaCadastrados(cadastrados);
+				}
+				break;
+			case 2:
+				if (loja.getListaDeCadastrados().size() == 0) {
+					EntradaSaida.exibeMsgErro("Não é possível dar entrada no estoque, pois nenhum produto foi cadastrado!");
+					//JOptionPane.showMessageDialog(null,
+					//		"Não é possível dar entrada no estoque, pois nenhum produto foi cadastrado!",
+					//		"Entrada no estoque", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					int entradaPosicao = EntradaSaida.escolheCodigo(loja);
+					int qtdeEntraEstoque = EntradaSaida.solicitaQtde();
+					loja.entrarNoEstoque(entradaPosicao, qtdeEntraEstoque);
+					//while (loja.getListaDeEstoque().size() == 0) {
+					//	JOptionPane.showMessageDialog(null, "O código informado não está cadastrado!", "Aviso",
+					//			JOptionPane.INFORMATION_MESSAGE);
+					//	loja.entrarNoEstoque(entradaPosicao, qtdeEntraEstoque);
+					//}
+				}
+				break;
+			case 3:
+				if (loja.getListaDeEstoque().size() == 0) {
+					JOptionPane.showMessageDialog(null, // FAZER MÉTODOS PARA MOSTRAR ESSAS MENSAGENS
+							"Nenhum produto foi adicionado ao estoque para que seja possível realizar uma venda!",
+							"Venda", JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					posicaoVenda = EntradaSaida.exibeMenuVender(loja);
+					if (posicaoVenda != -1) {
+						if (loja.getListaDeEstoque().get(posicaoVenda).getQuantidade() == 0) {
+							JOptionPane.showMessageDialog(null, "Esse produto está esgotado!", "Aviso",
+									JOptionPane.INFORMATION_MESSAGE);
+						} else {
+							int qtdeVender = EntradaSaida.solicitaQtdeVender();// VALIDAR PARA N PEGAR NUM NEGATIVOS
+																				// **OK**
+							while (qtdeVender <= 0) {
+								qtdeVender = EntradaSaida.solicitaQtdeVender();
+							}
+							String data = EntradaSaida.geraDataVenda();
+							loja.vender(posicaoVenda, qtdeVender);
+							loja.recebeDadosCupom(posicaoVenda, qtdeVender, data);
+						}
+					}
+				}
+				break;
+			case 4:
+				// estocados = loja.geraListaEstocados();
+				// if (estocados == "") {
+				if (loja.getListaDeEstoque().size() == 0) { // FAZER A VALIDAÇÃO PELO TAMANHO **OK**
+					JOptionPane.showMessageDialog(null, "Nenhum produto foi estocado!", "Lista de Estocados",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					estocados = loja.geraListaEstocados();
+					EntradaSaida.exibeListaEstocados(estocados);
+				}
+				break;
+			case 5:
+				// String cupons = loja.gerarCupom(); // CORRIGIDO
+				if (loja.getListaDeCupons().size() == 0) {
+					JOptionPane.showMessageDialog(null, "Nenhum cupom foi gerado!", "Lista de Cupons",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					String cupons = loja.gerarCupom();
+					EntradaSaida.exibirCupom(cupons);
+				}
+				break;
+			case 6:
+				// double totalVendas = loja.geraTotalVendas();
+				// if (totalVendas == 0) {
+				if (loja.getListaDeCupons().size() == 0) {
+					JOptionPane.showMessageDialog(null, "Nenhuma venda foi realizada!", "Lista de Cupons",
+							JOptionPane.INFORMATION_MESSAGE);
+				} else {
+					double totalVendas = loja.geraTotalVendas();
+					EntradaSaida.exibeTotalVendas(totalVendas);
+				}
+				break;
+			}
+
+		} while (opcao != 7 && opcao != -1);
+		System.exit(0);
+		// FECHAR PROGRAMA (SYSTEM) **OK**
+	}
+
+}

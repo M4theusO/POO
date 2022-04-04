@@ -1,0 +1,7 @@
+public ArrayList<Cupom> getListaDeCupons() {
+		return listaDeCupons;
+	}
+
+	public void setListaDeCupons(ArrayList<Cupom> listaDeCupons) {
+		this.listaDeCupons = listaDeCupons;
+	}
